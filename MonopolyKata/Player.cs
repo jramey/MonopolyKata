@@ -7,10 +7,12 @@ namespace MonopolyKata
 {
     public class Player
     {
+        public String Name { get; private set; }
         public Int32 Position { get; private set; }
 
-        public Player()
+        public Player(String Name, Int32 Position)
         {
+            this.Name = Name;
             Position = 0;
         }
 
@@ -18,6 +20,27 @@ namespace MonopolyKata
         {
             Position = Position + Spaces;
             Position = Position % 40;
+        }
+
+        public override Int32 GetHashCode()
+        {
+            return Name.GetHashCode() ^ Position.GetHashCode();
+        }
+
+        public override Boolean Equals(Object obj)
+        {
+            if (obj is Player == false)
+                return false;
+
+            var otherPlayer = obj as Player;
+
+            if (this.GetHashCode() != otherPlayer.GetHashCode())
+                return false;
+
+            if (this.Name != otherPlayer.Name || this.Position != otherPlayer.Position)
+                return false;
+
+            return true;
         }
     }
 }

@@ -7,30 +7,30 @@ namespace MonopolyKata
 {
     public class Game
     {
-        private List<String> listOfPlayers;
-        private List<String> turnOrder;
-        private List<String> dummyPlayerList;
-        private List<String> turnStack;
+        private List<Player> listOfPlayers;
+        private List<Player> turnOrder;
+        private List<Player> dummyPlayerList;
+        private List<Player> turnStack;
         private Int32 currentPlayersTurn;
-        private String nextPlayer;
+        private Player nextPlayer;
         private static Random random;
 
         public Game()
         {
-            listOfPlayers = new List<String>();
-            turnOrder = new List<string>();
-            dummyPlayerList = new List<String>();
-            turnStack = new List<String>();
+            listOfPlayers = new List<Player>();
+            turnOrder = new List<Player>();
+            dummyPlayerList = new List<Player>();
+            turnStack = new List<Player>();
             currentPlayersTurn = 0;
             random = new Random(1);
         }
 
-        public void AddPlayer(string Piece)
+        public void AddPlayer(Player piece)
         {
-            listOfPlayers.Add(Piece);
+            listOfPlayers.Add(piece);
         }
 
-        public IEnumerable<String> GetPlayers()
+        public IEnumerable<Player> GetPlayers()
         {
             return listOfPlayers;
         }
@@ -45,9 +45,9 @@ namespace MonopolyKata
         {
             CreateDummyPlayerList();
             
-            foreach (String player in listOfPlayers)
+            foreach (Player player in listOfPlayers)
             {
-                string nextPievesToAdd = dummyPlayerList.ElementAt(random.Next(0, listOfPlayers.Count));
+                Player nextPievesToAdd = dummyPlayerList.ElementAt(random.Next(0, listOfPlayers.Count));
                 turnOrder.Add(nextPievesToAdd);
                 dummyPlayerList.Remove(nextPievesToAdd);
             }
@@ -58,12 +58,12 @@ namespace MonopolyKata
             dummyPlayerList =  listOfPlayers.ToList();
         }
 
-        public IEnumerable<String> GetTurnOrder()
+        public IEnumerable<Player> GetTurnOrder()
         {
             return turnOrder;
         }
 
-        public String GetNextTurn()
+        public Player GetNextTurn()
         {
             nextPlayer = turnOrder.ElementAt(currentPlayersTurn);
             IncrementTurnCounter();
@@ -84,7 +84,7 @@ namespace MonopolyKata
             turnStack.Add(nextPlayer);
         }
 
-        public List<String> GetTurnsTaken()
+        public List<Player> GetTurnsTaken()
         {
             return turnStack;
         }

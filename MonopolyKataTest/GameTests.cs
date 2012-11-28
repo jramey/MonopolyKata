@@ -11,71 +11,92 @@ namespace MonopolyKataTest
     public class GameTests
     {
         private Game game;
+        private Player Car;
+        private Player Horse;
 
         [TestInitialize]
         public void BeginTest()
         {
             game = new Game();
+            Horse = new Player("horse", 0);
+            Car = new Player("car", 0);
+            
         }
 
         [TestMethod]
         public void CreateGameWithTwoPlayersCarAndHorse()
         {
-            game.AddPlayer("Car");
-            game.AddPlayer("Horse");
+            var expectedFirstPlayer = Car;
+            var expectedSecondPlayer = Horse;
+
+            game.AddPlayer(expectedFirstPlayer);
+            game.AddPlayer(expectedSecondPlayer);
+
             var firsPlayer = game.GetPlayers().First();
             var secondPlayer = game.GetPlayers().Skip(1).First();
 
-            Assert.AreEqual("Car", firsPlayer);
-            Assert.AreEqual("Horse", secondPlayer);
+            Assert.AreEqual(expectedFirstPlayer, firsPlayer);
+            Assert.AreEqual(expectedSecondPlayer, secondPlayer);
         }
 
         [TestMethod, ExpectedException(typeof(InvalidOperationException))]
         public void CreateGameWithLessThanTwoPlayersFail()
         {
-            game.AddPlayer("One");
+            game.AddPlayer(Car);
             game.CheckValidNumberOfPlayers();
         }
 
         [TestMethod, ExpectedException(typeof(InvalidOperationException))]
         public void CreateGameWithLMoreThanEightPlayersFail()
         {
-            game.AddPlayer("One");
-            game.AddPlayer("Two");
-            game.AddPlayer("Three");
-            game.AddPlayer("Four");
-            game.AddPlayer("Five");
-            game.AddPlayer("Six");
-            game.AddPlayer("Seven");
-            game.AddPlayer("Eight");
-            game.AddPlayer("Nine");
+            Player three = new Player("three", 0);
+            Player four = new Player("four", 0);
+            Player five = new Player("five", 0);
+            Player six = new Player("six", 0);
+            Player seven = new Player("seven", 0);
+            Player eight = new Player("eight", 0);
+            Player nine = new Player("nine", 0);
+
+            game.AddPlayer(Car);
+            game.AddPlayer(Horse);
+            game.AddPlayer(three);
+            game.AddPlayer(four);
+            game.AddPlayer(five); 
+            game.AddPlayer(six);
+            game.AddPlayer(seven);
+            game.AddPlayer(eight);
+            game.AddPlayer(nine);
+
             game.CheckValidNumberOfPlayers();
         }
-        
+
         [TestMethod]
         public void GetNextPlayersTurn()
         {
-            game.AddPlayer("Car");
+            var expectedNextPlayer = Car;
+            game.AddPlayer(Car);
             game.CreateTurnOrder();
-            Assert.AreEqual("Car", game.GetNextTurn());
+            Assert.AreEqual(expectedNextPlayer, game.GetNextTurn());
         }
 
         [TestMethod]
         public void PlayerTakeTurns()
         {
-            game.AddPlayer("Car");
-            game.AddPlayer("Horse");
+            var expectedFirstTurn = Car;
+            var expectedSecondTurn = Horse;
+            game.AddPlayer(Car);
+            game.AddPlayer(Horse);
             game.CreateTurnOrder();
             TakeManyTurns(2);
-            Assert.AreEqual("Car", game.GetTurnsTaken().First());
-            Assert.AreEqual("Horse", game.GetTurnsTaken().Skip(1).First());
+            Assert.AreEqual(expectedFirstTurn, game.GetTurnsTaken().First());
+            Assert.AreEqual(expectedSecondTurn, game.GetTurnsTaken().Skip(1).First());
         }
 
         [TestMethod]
         public void TakeTwentyTurns_OrderStaysTheSame()
         {
-            game.AddPlayer("Car");
-            game.AddPlayer("Horse");
+            game.AddPlayer(Car);
+            game.AddPlayer(Horse);
             game.CreateTurnOrder();
             var firstPlayer = game.GetTurnOrder().First();
             var secondPlayer = game.GetTurnOrder().Skip(1).First();
@@ -84,7 +105,7 @@ namespace MonopolyKataTest
             for (int i = 0; i < 20; i++)
             {
                 TakeManyTurns(40);
-                
+
                 if (counter % 2 == 0)
                     Assert.AreEqual(firstPlayer, game.GetTurnsTaken().ElementAt(counter));
                 else
@@ -96,8 +117,8 @@ namespace MonopolyKataTest
         [TestMethod]
         public void TakeTwentyTurns_TwentyTurnsEach()
         {
-            game.AddPlayer("Car");
-            game.AddPlayer("Horse");
+            game.AddPlayer(Car);
+            game.AddPlayer(Horse);
             game.CreateTurnOrder();
             var carCounter = 0;
             var horseCounter = 0;
@@ -108,7 +129,7 @@ namespace MonopolyKataTest
             }
 
             for (int i = 0; i < 40; i++)
-                if (game.GetTurnsTaken().ElementAt(i) == "Car")
+                if (game.GetTurnsTaken().ElementAt(i) == Car)
                     carCounter++;
                 else
                     horseCounter++;

@@ -10,33 +10,44 @@ namespace MonopolyKataTest
     [TestClass]
     public class PlayerTests
     {
-        Player player;
+        Player Car;
 
         [TestInitialize]
         public void CreatePlayer()
         {
-            player = new Player();
+            Car = new Player("Car", 0);
         }
 
         [TestMethod]
         public void StartingPoistionIsZero()
         {
-            Assert.AreEqual(0, player.Position);
+            Assert.AreEqual(0, Car.Position);
         }
 
         [TestMethod]
         public void MoveSevenFromZeroEndsOnSeven()
         {
-            player.MovePlayer(7);
-            Assert.AreEqual(7, player.Position);
+            Car.MovePlayer(7);
+            Assert.AreEqual(7, Car.Position);
         }
 
         [TestMethod]
         public void MoveSixFromThirtyNigeEndsOnFive()
         {
-            player.MovePlayer(39);
-            player.MovePlayer(6);
-            Assert.AreEqual(5, player.Position);
+            Car.MovePlayer(39);
+            Car.MovePlayer(6);
+            Assert.AreEqual(5, Car.Position);
+        }
+
+        [TestMethod]
+        public void MoveSecondPlayerFiveSpaces()
+        {
+            Player Horse = new Player("Horse", 0);
+            var nextPlayer = Horse;
+            nextPlayer.MovePlayer(5);
+
+            Assert.AreEqual(5, Horse.Position);
+
         }
     }
 }

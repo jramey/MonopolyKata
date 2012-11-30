@@ -15,12 +15,11 @@ namespace MonopolyKataTest
         private Player Horse;
 
         [TestInitialize]
-        public void BeginTest()
+        public void SetupGameTest()
         {
             game = new Game();
             Horse = new Player("horse", 0);
-            Car = new Player("car", 0);
-            
+            Car = new Player("car", 0); 
         }
 
         [TestMethod]
@@ -43,7 +42,7 @@ namespace MonopolyKataTest
         public void CreateGameWithLessThanTwoPlayersFail()
         {
             game.AddPlayer(Car);
-            game.CheckValidNumberOfPlayers();
+            game.PlayGame();
         }
 
         [TestMethod, ExpectedException(typeof(InvalidOperationException))]
@@ -67,26 +66,27 @@ namespace MonopolyKataTest
             game.AddPlayer(eight);
             game.AddPlayer(nine);
 
-            game.CheckValidNumberOfPlayers();
+            game.PlayGame();
         }
 
         [TestMethod]
-        public void GetNextPlayersTurn()
+        public void FirstPlayTakeTheirTurn_GetTheNextPlayersTurn()
         {
-            var expectedNextPlayer = Car;
             game.AddPlayer(Car);
-            game.CreateTurnOrder();
+            game.AddPlayer(Horse);
+            game.PlayGame();
+            var expectedNextPlayer = game.GetTurnOrder().Skip(1).First(); ;
             Assert.AreEqual(expectedNextPlayer, game.GetNextTurn());
         }
 
         [TestMethod]
-        public void PlayerTakeTurns()
+        public void BothPlayersTakeTheirTurns()
         {
             var expectedFirstTurn = Car;
             var expectedSecondTurn = Horse;
             game.AddPlayer(Car);
             game.AddPlayer(Horse);
-            game.CreateTurnOrder();
+            game.PlayGame();
             TakeManyTurns(2);
             Assert.AreEqual(expectedFirstTurn, game.GetTurnsTaken().First());
             Assert.AreEqual(expectedSecondTurn, game.GetTurnsTaken().Skip(1).First());
@@ -97,7 +97,7 @@ namespace MonopolyKataTest
         {
             game.AddPlayer(Car);
             game.AddPlayer(Horse);
-            game.CreateTurnOrder();
+            game.PlayGame();
             var firstPlayer = game.GetTurnOrder().First();
             var secondPlayer = game.GetTurnOrder().Skip(1).First();
             var counter = 0;
@@ -119,7 +119,7 @@ namespace MonopolyKataTest
         {
             game.AddPlayer(Car);
             game.AddPlayer(Horse);
-            game.CreateTurnOrder();
+            game.PlayGame();
             var carCounter = 0;
             var horseCounter = 0;
 

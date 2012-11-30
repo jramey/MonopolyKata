@@ -11,11 +11,15 @@ namespace MonopolyKataTest
     public class PlayerTests
     {
         Player Car;
+        Player Horse;
+        Game game;
+        Dice dice;
 
         [TestInitialize]
         public void CreatePlayer()
         {
             Car = new Player("Car", 0);
+            Horse = new Player("Horse", 0);
         }
 
         [TestMethod]
@@ -47,7 +51,19 @@ namespace MonopolyKataTest
             nextPlayer.MovePlayer(5);
 
             Assert.AreEqual(5, Horse.Position);
+        }
 
+        [TestMethod]
+        public void PlayerRollsDiceFromStartingPositionAndPositionIsCorrect()
+        {
+            game = new Game();
+            game.AddPlayer(Car);
+            game.AddPlayer(Horse);
+            game.PlayGame();
+            
+            var expectedPostion = game.GetSpaceToMove();
+
+            Assert.AreEqual(expectedPostion, Car.Position);
         }
     }
 }

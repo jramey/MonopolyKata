@@ -42,5 +42,10 @@ namespace MonopolyKata
 
             return true;
         }
+
+        public override String ToString()
+        {
+            return String.Format("({0}, {1})", Name, Position);
+        }
     }
 }

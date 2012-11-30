@@ -13,7 +13,9 @@ namespace MonopolyKata
         private List<Player> turnStack;
         private Int32 currentPlayersTurn;
         private Player nextPlayer;
+        private Int32 spacesToMove;
         private static Random random;
+        Dice dice;
 
         public Game()
         {
@@ -23,6 +25,23 @@ namespace MonopolyKata
             turnStack = new List<Player>();
             currentPlayersTurn = 0;
             random = new Random(1);
+            dice = new Dice();
+        }
+
+        public void PlayGame()
+        {
+            CheckValidNumberOfPlayers();
+            CreateTurnOrder();
+            TakeTurn();
+        }
+
+        public void TakeTurn()
+        {
+            GetNextTurn();
+            dice.Roll();
+            spacesToMove = dice.GetRoll();
+            nextPlayer.MovePlayer(spacesToMove);
+            turnStack.Add(nextPlayer);
         }
 
         public void AddPlayer(Player piece)
@@ -35,13 +54,13 @@ namespace MonopolyKata
             return listOfPlayers;
         }
 
-        public void CheckValidNumberOfPlayers()
+        private void CheckValidNumberOfPlayers()
         {
             if (listOfPlayers.Count < 2 || listOfPlayers.Count > 8)
                 throw new InvalidOperationException();
         }
 
-        public void CreateTurnOrder()
+        private void CreateTurnOrder()
         {
             CreateDummyPlayerList();
             
@@ -78,15 +97,14 @@ namespace MonopolyKata
             currentPlayersTurn++;
         }
 
-        public void TakeTurn()
-        {
-            GetNextTurn();
-            turnStack.Add(nextPlayer);
-        }
-
         public List<Player> GetTurnsTaken()
         {
             return turnStack;
+        }
+
+        public int GetSpaceToMove()
+        {
+            return spacesToMove;
         }
     }
 }

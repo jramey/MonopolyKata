@@ -9,11 +9,18 @@ namespace MonopolyKata
     {
         public String Name { get; private set; }
         public Int32 Position { get; private set; }
+        public Int32 Balance { get; private set; }
 
-        public Player(String Name, Int32 Position)
+        public Player(String Name)
         {
             this.Name = Name;
+            SetupPlayer();
+        }
+
+        private void SetupPlayer()
+        {
             Position = 0;
+            Balance = 1500;
         }
 
         public void MovePlayer(Int32 Spaces)
@@ -37,7 +44,7 @@ namespace MonopolyKata
             if (this.GetHashCode() != otherPlayer.GetHashCode())
                 return false;
 
-            if (this.Name != otherPlayer.Name || this.Position != otherPlayer.Position)
+            if (this.Name != otherPlayer.Name || this.Position != otherPlayer.Position || this.Balance != otherPlayer.Balance)
                 return false;
 
             return true;
@@ -45,7 +52,7 @@ namespace MonopolyKata
 
         public override String ToString()
         {
-            return String.Format("({0}, {1})", Name, Position);
+            return String.Format("({0}, {1}, {2})", Name, Position, Balance);
         }
     }
 }

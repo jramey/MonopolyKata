@@ -18,8 +18,8 @@ namespace MonopolyKataTest
         public void SetupGameTest()
         {
             game = new Game();
-            Horse = new Player("horse", 0);
-            Car = new Player("car", 0); 
+            Horse = new Player("horse");
+            Car = new Player("car"); 
         }
 
         [TestMethod]
@@ -48,13 +48,13 @@ namespace MonopolyKataTest
         [TestMethod, ExpectedException(typeof(InvalidOperationException))]
         public void CreateGameWithLMoreThanEightPlayersFail()
         {
-            Player three = new Player("three", 0);
-            Player four = new Player("four", 0);
-            Player five = new Player("five", 0);
-            Player six = new Player("six", 0);
-            Player seven = new Player("seven", 0);
-            Player eight = new Player("eight", 0);
-            Player nine = new Player("nine", 0);
+            var three = new Player("three");
+            var four = new Player("four");
+            var five = new Player("five");
+            var six = new Player("six");
+            var seven = new Player("seven");
+            var eight = new Player("eight");
+            var nine = new Player("nine");
 
             game.AddPlayer(Car);
             game.AddPlayer(Horse);

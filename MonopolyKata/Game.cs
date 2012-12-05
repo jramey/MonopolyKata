@@ -7,10 +7,10 @@ namespace MonopolyKata
 {
     public class Game
     {
-        private List<Player> listOfPlayers;
+        private List<Player> players;
         private List<Player> turnOrder;
         private List<Player> dummyPlayerList;
-        private List<Player> turnStack;
+        private List<Player> turns;
         private Int32 currentPlayersTurn;
         private Player nextPlayer;
         private Int32 spacesToMove;
@@ -19,10 +19,10 @@ namespace MonopolyKata
 
         public Game()
         {
-            listOfPlayers = new List<Player>();
+            players = new List<Player>();
             turnOrder = new List<Player>();
             dummyPlayerList = new List<Player>();
-            turnStack = new List<Player>();
+            turns = new List<Player>();
             currentPlayersTurn = 0;
             random = new Random(1);
             dice = new Dice();
@@ -41,22 +41,22 @@ namespace MonopolyKata
             dice.Roll();
             spacesToMove = dice.GetRoll();
             nextPlayer.MovePlayer(spacesToMove);
-            turnStack.Add(nextPlayer);
+            turns.Add(nextPlayer);
         }
 
         public void AddPlayer(Player piece)
         {
-            listOfPlayers.Add(piece);
+            players.Add(piece);
         }
 
         public IEnumerable<Player> GetPlayers()
         {
-            return listOfPlayers;
+            return players;
         }
 
         private void CheckValidNumberOfPlayers()
         {
-            if (listOfPlayers.Count < 2 || listOfPlayers.Count > 8)
+            if (players.Count < 2 || players.Count > 8)
                 throw new InvalidOperationException();
         }
 
@@ -64,9 +64,9 @@ namespace MonopolyKata
         {
             CreateDummyPlayerList();
             
-            foreach (Player player in listOfPlayers)
+            foreach (Player player in players)
             {
-                Player nextPievesToAdd = dummyPlayerList.ElementAt(random.Next(0, listOfPlayers.Count));
+                Player nextPievesToAdd = dummyPlayerList.ElementAt(random.Next(0, players.Count));
                 turnOrder.Add(nextPievesToAdd);
                 dummyPlayerList.Remove(nextPievesToAdd);
             }
@@ -74,7 +74,7 @@ namespace MonopolyKata
 
         private void CreateDummyPlayerList()
         {
-            dummyPlayerList =  listOfPlayers.ToList();
+            dummyPlayerList =  players.ToList();
         }
 
         public IEnumerable<Player> GetTurnOrder()
@@ -91,7 +91,7 @@ namespace MonopolyKata
 
         private void IncrementTurnCounter()
         {
-            if(currentPlayersTurn == listOfPlayers.Count - 1)
+            if(currentPlayersTurn == players.Count - 1)
                 currentPlayersTurn = 0;
             else
             currentPlayersTurn++;
@@ -99,7 +99,7 @@ namespace MonopolyKata
 
         public List<Player> GetTurnsTaken()
         {
-            return turnStack;
+            return turns;
         }
 
         public int GetSpaceToMove()

@@ -18,8 +18,8 @@ namespace MonopolyKataTest
         [TestInitialize]
         public void CreatePlayer()
         {
-            Car = new Player("Car", 0);
-            Horse = new Player("Horse", 0);
+            Car = new Player("Car");
+            Horse = new Player("Horse");
         }
 
         [TestMethod]
@@ -46,7 +46,7 @@ namespace MonopolyKataTest
         [TestMethod]
         public void MoveSecondPlayerFiveSpaces()
         {
-            Player Horse = new Player("Horse", 0);
+            Player Horse = new Player("Horse");
             var nextPlayer = Horse;
             nextPlayer.MovePlayer(5);
 

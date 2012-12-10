@@ -15,8 +15,8 @@ namespace MonopolyKata
         private Player nextPlayer;
         private Int32 spacesToMove;
         private static Random random;
-        Dice dice;
-
+        private Mover mover;
+       
         public Game()
         {
             players = new List<Player>();
@@ -25,7 +25,7 @@ namespace MonopolyKata
             turns = new List<Player>();
             currentPlayersTurn = 0;
             random = new Random(1);
-            dice = new Dice();
+            mover = new Mover();
         }
 
         public void PlayGame()
@@ -38,9 +38,8 @@ namespace MonopolyKata
         public void TakeTurn()
         {
             GetNextTurn();
-            dice.Roll();
-            spacesToMove = dice.GetRoll();
-            nextPlayer.MovePlayer(spacesToMove);
+            mover.PlayerRolls();
+            mover.MovePlayerOnBoard(nextPlayer);
             turns.Add(nextPlayer);
         }
 
@@ -102,7 +101,7 @@ namespace MonopolyKata
             return turns;
         }
 
-        public int GetSpaceToMove()
+        public Int32 GetSpaceToMove()
         {
             return spacesToMove;
         }

@@ -29,6 +29,11 @@ namespace MonopolyKata
             Position = Position % 40;
         }
 
+        public void ModifyPlayerBalance(Int32 amount)
+        {
+            Balance = Balance + amount;
+        }
+
         public override Int32 GetHashCode()
         {
             return Name.GetHashCode() ^ Position.GetHashCode();

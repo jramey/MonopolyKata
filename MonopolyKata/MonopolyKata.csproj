@@ -40,8 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Board.cs" />
     <Compile Include="Dice.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Go.cs" />
+    <Compile Include="GoToJail.cs" />
+    <Compile Include="IncomeTax.cs" />
+    <Compile Include="ISpace.cs" />
+    <Compile Include="LuxuryTax.cs" />
+    <Compile Include="Mover.cs" />
+    <Compile Include="NormalSpace.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

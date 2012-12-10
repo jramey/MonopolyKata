@@ -8,7 +8,7 @@ using MonopolyKata;
 namespace MonopolyKataTest
 {
     [TestClass]
-    public class GameTests
+    public class GameUnitTests
     {
         private Game game;
         private Player Car;
@@ -75,7 +75,8 @@ namespace MonopolyKataTest
             game.AddPlayer(Car);
             game.AddPlayer(Horse);
             game.PlayGame();
-            var expectedNextPlayer = game.GetTurnOrder().Skip(1).First(); ;
+            var expectedNextPlayer = game.GetTurnOrder().Skip(1).First(); 
+
             Assert.AreEqual(expectedNextPlayer, game.GetNextTurn());
         }
 
@@ -88,6 +89,7 @@ namespace MonopolyKataTest
             game.AddPlayer(Horse);
             game.PlayGame();
             TakeManyTurns(2);
+
             Assert.AreEqual(expectedFirstTurn, game.GetTurnsTaken().First());
             Assert.AreEqual(expectedSecondTurn, game.GetTurnsTaken().Skip(1).First());
         }

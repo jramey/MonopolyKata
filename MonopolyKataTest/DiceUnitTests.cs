@@ -22,6 +22,7 @@ namespace MonopolyKataTest
         public void DiceRollsAreRandom()
         {
             var listOfRolls = new List<Int32>();
+
             for(int i = 0; i < 100; i++)
             {
                 dice.Roll();

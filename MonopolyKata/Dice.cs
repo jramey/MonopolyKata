@@ -1,10 +1,9 @@
-﻿namespace MonopolyKata
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+namespace MonopolyKata
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-
     public class Dice
     {
         private static Random rand;

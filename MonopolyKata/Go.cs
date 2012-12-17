@@ -5,14 +5,17 @@ using System.Text;
 
 namespace MonopolyKata
 {
-    public class Go : ISpace
+    public class Go : Space
     {
-        public void LandOn(Player player)
+   
+        public Go(String name, Int32 location)
+            : base(name, location)
         {
-            player.ModifyPlayerBalance(200);
+            Name = name;
+            Location = location;
         }
 
-        public void PassBy(Player player)
+        public override void LandOn(Player player)
         {
             player.ModifyPlayerBalance(200);
         }

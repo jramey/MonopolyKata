@@ -4,15 +4,18 @@ using System.Linq;
 using System.Text;
 namespace MonopolyKata
 {
-    public class LuxuryTax : ISpace
+    public class LuxuryTax : Space
     {
-        public void LandOn(Player player)
+        public LuxuryTax(String name, Int32 location)
+            : base(name, location)
         {
-            player.ModifyPlayerBalance(-75);
+            Name = name;
+            Location = location;
         }
 
-        public void PassBy(Player player)
+        public override void LandOn(Player player)
         {
+            player.ModifyPlayerBalance(-75);
         }
     }
 }

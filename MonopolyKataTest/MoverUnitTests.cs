@@ -47,12 +47,13 @@ namespace MonopolyKataTest
         [TestMethod]
         public void PassingGoIncreaseBalanceByTwoHundred()
         {
-            mover.SetSpacesToMove(41);
+            mover.SetSpacesToMove(20);
+            mover.MovePlayerOnBoard(Car);
+            mover.SetSpacesToMove(21);
             mover.MovePlayerOnBoard(Car);
             var expectedBalance = 1700;
 
             Assert.AreEqual(expectedBalance, Car.Balance);
-            Assert.AreEqual(1, Car.Position);
         }
 
         [TestMethod]
@@ -68,7 +69,11 @@ namespace MonopolyKataTest
         [TestMethod]
         public void PassingOverGoIncreaseBalanceByFourHundred()
         {
-            mover.SetSpacesToMove(80);
+            mover.SetSpacesToMove(20);
+            mover.MovePlayerOnBoard(Car);
+            mover.SetSpacesToMove(21);
+            mover.MovePlayerOnBoard(Car);
+            mover.SetSpacesToMove(21);
             mover.MovePlayerOnBoard(Car);
             var expectedBalance = 1900;
 
@@ -89,33 +94,36 @@ namespace MonopolyKataTest
         public void LandingOnTimcomeTaxWithTotalWorthOfEighteenHundredDecreaseBalanceByOneHundredEight()
         {
             Car.ModifyPlayerBalance(300);
+            var currentBalance = Car.Balance;
             mover.SetSpacesToMove(4);
             mover.MovePlayerOnBoard(Car);
             var expectedBalance = 1620;
 
-            Assert.AreEqual(expectedBalance, Car.Balance);
+            Assert.AreEqual(currentBalance - expectedBalance, 180);
         }
 
         [TestMethod]
         public void LandingOnTimcomeTaxWithTotalWorthOfTwentyTwoHundredDecreaseBalanceByTwonHundred()
         {
             Car.ModifyPlayerBalance(700);
+            var currentBalance = Car.Balance;
             mover.SetSpacesToMove(4);
             mover.MovePlayerOnBoard(Car);
             var expectedBalance = 2000;
 
-            Assert.AreEqual(expectedBalance, Car.Balance);
+            Assert.AreEqual(currentBalance - expectedBalance, 200);
         }
 
         [TestMethod]
         public void LandingOnTimcomeTaxWithTotalWorthOfTwoThousandDecreaseBalanceByTwonHundred()
         {
             Car.ModifyPlayerBalance(500);
+            var currentBalance = Car.Balance;
             mover.SetSpacesToMove(4);
             mover.MovePlayerOnBoard(Car);
             var expectedBalance = 1800;
 
-            Assert.AreEqual(expectedBalance, Car.Balance);
+            Assert.AreEqual(currentBalance - expectedBalance, 200);
         }
 
         [TestMethod]
@@ -143,10 +151,11 @@ namespace MonopolyKataTest
         public void LandingOnLuxuryTaxDecreasesBalanceBySeventyFive()
         {
             mover.SetSpacesToMove(38);
+            var currentBalance = Car.Balance;
             mover.MovePlayerOnBoard(Car);
             var expectedBalance = 1425;
 
-            Assert.AreEqual(expectedBalance, Car.Balance);
+            Assert.AreEqual(currentBalance - expectedBalance, 75);
         }
 
         [TestMethod]

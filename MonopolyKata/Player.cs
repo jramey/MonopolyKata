@@ -23,10 +23,9 @@ namespace MonopolyKata
             Balance = 1500;
         }
 
-        public void MovePlayer(Int32 Spaces)
+        public void MovePlayer(Int32 spaceToMove)
         {
-            Position = Position + Spaces;
-            Position = Position % 40;
+            Position = Position + spaceToMove;
         }
 
         public void ModifyPlayerBalance(Int32 amount)

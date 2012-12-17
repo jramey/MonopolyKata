@@ -13,7 +13,6 @@ namespace MonopolyKata
         private List<Player> turns;
         private Int32 currentPlayersTurn;
         private Player nextPlayer;
-        private Int32 spacesToMove;
         private static Random random;
         private Mover mover;
        
@@ -99,11 +98,6 @@ namespace MonopolyKata
         public List<Player> GetTurnsTaken()
         {
             return turns;
-        }
-
-        public Int32 GetSpaceToMove()
-        {
-            return spacesToMove;
         }
     }
 }

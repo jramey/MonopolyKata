@@ -18,21 +18,15 @@ namespace MonopolyKata
 
         public void MovePlayerOnBoard(Player player)
         {
-            ISpace currentSpace = board.GetSpaceAtLocation((player.Position + 1) % 40);
-           
-            for (int i = 1; i <= spacesToMove; i++)
-            {
-                currentSpace.PassBy(player);
-                currentSpace = board.GetSpaceAtLocation((player.Position + i) % 40);
-            }
+            var currentPosition = player.Position;
+            var nextPosition = (currentPosition + spacesToMove) % 40;
+            
+            if (currentPosition > 0 && currentPosition >= nextPosition)
+                player.ModifyPlayerBalance(200);
+            player.MovePlayer(nextPosition);
+            var currentSpace = board.GetSpaceAtLocation(nextPosition);
             currentSpace.LandOn(player);
-            AlterPlayersPosition(player);
         }
-
-        private void AlterPlayersPosition(Player player)
-        {
-            player.MovePlayer(spacesToMove);
-        } 
 
         public void PlayerRolls()
         {

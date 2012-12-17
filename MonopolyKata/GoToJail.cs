@@ -4,15 +4,18 @@ using System.Linq;
 using System.Text;
 namespace MonopolyKata
 {
-    public class GoToJail : ISpace
+    public class GoToJail : Space
     {
-        public void LandOn(Player player)
+        public GoToJail(String name, Int32 location)
+            : base(name, location)
         {
-            player.MovePlayer(-20);
+            Name = name;
+            Location = location;
         }
 
-        public void PassBy(Player player)
+        public override void LandOn(Player player)
         {
+            player.MovePlayer(-20);
         }
     }
 }

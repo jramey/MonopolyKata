@@ -8,6 +8,5 @@ namespace MonopolyKata
     public interface ISpace
     {
         void LandOn(Player player);
-        void PassBy(Player player);
     }
 }

@@ -4,10 +4,17 @@ using System.Linq;
 using System.Text;
 
 namespace MonopolyKata
-{  
-    public class IncomeTax : ISpace
+{
+    public class IncomeTax : Space
     {
-        public void LandOn(Player player)
+        public IncomeTax(String name, Int32 location)
+            : base(name, location)
+        {
+            Name = name;
+            Location = location;
+        }
+
+        public override void LandOn(Player player)
         {
             int tenPercentOfTotalWorth = (int)System.Math.Round(player.Balance * .1, 0);
 
@@ -15,10 +22,6 @@ namespace MonopolyKata
                 player.ModifyPlayerBalance(-200);
             else
                 player.ModifyPlayerBalance(-tenPercentOfTotalWorth);
-        }
-
-        public void PassBy(Player player)
-        {
         }
     }
 }

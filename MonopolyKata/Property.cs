@@ -16,5 +16,10 @@ namespace MonopolyKata
         {
         
         }
+
+        public override void LandOn(Player player)
+        {
+            base.LandOn(player);
+        }
     }
 }

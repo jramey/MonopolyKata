@@ -6,16 +6,17 @@ namespace MonopolyKata
 {
     public class GoToJail : Space
     {
-        public GoToJail(String name, Int32 location)
-            : base(name, location)
+        public GoToJail(String name, Int32 location, Banker banker)
+            : base(name, location, banker)
         {
             Name = name;
             Location = location;
+            Banker = banker;
         }
 
         public override void LandOn(Player player)
         {
-            player.MovePlayer(-20);
+            player.MovePlayer(10);
         }
     }
 }

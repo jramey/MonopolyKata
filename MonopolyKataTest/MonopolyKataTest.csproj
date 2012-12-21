@@ -45,12 +45,19 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BankerUnitTests.cs" />
     <Compile Include="BoardUnitTest.cs" />
     <Compile Include="DiceUnitTests.cs" />
     <Compile Include="MoverUnitTests.cs" />
     <Compile Include="PlayerUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GameUnitTests.cs" />
+    <Compile Include="Real Estate\RailroadUnitTest.cs" />
+    <Compile Include="Real Estate\UtilitiesUnitTest.cs" />
+    <Compile Include="Spaces\GoUnitTests.cs" />
+    <Compile Include="Spaces\GoToJailUnitTest.cs" />
+    <Compile Include="Spaces\IncomeTaxUnitTest.cs" />
+    <Compile Include="Spaces\LuxuryTaxUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonopolyKata\MonopolyKata.csproj">

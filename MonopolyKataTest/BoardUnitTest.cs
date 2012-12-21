@@ -15,7 +15,9 @@ namespace MonopolyKataTest
         [TestInitialize]
         public void CreateBoard()
         {
-            board = new Board();
+            var banker = new Banker();
+            var dice = new Dice();
+            board = new Board(banker, dice);
         }
 
         [TestMethod]

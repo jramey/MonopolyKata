@@ -6,16 +6,17 @@ namespace MonopolyKata
 {
     public class LuxuryTax : Space
     {
-        public LuxuryTax(String name, Int32 location)
-            : base(name, location)
+        public LuxuryTax(String name, Int32 location, Banker banker)
+            : base(name, location,  banker)
         {
             Name = name;
             Location = location;
+            Banker = banker;
         }
 
         public override void LandOn(Player player)
         {
-            player.ModifyPlayerBalance(-75);
+            Banker.CreditPlayerAccount(player, 75);
         }
     }
 }

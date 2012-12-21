@@ -7,17 +7,17 @@ namespace MonopolyKata
 {
     public class Go : Space
     {
-   
-        public Go(String name, Int32 location)
-            : base(name, location)
+        public Go(String name, Int32 location, Banker banker)
+            : base(name, location, banker)
         {
             Name = name;
             Location = location;
+            Banker = banker;
         }
 
         public override void LandOn(Player player)
         {
-            player.ModifyPlayerBalance(200);
+            Banker.DebitPlayerAccount(player, 200);
         }
     }
 }

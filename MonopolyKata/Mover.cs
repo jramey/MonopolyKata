@@ -8,12 +8,14 @@ namespace MonopolyKata
     {
         private Board board;
         private Dice dice;
+        private Banker banker;
         private int spacesToMove;
         
         public Mover()
         {
-            board = new Board();
+            banker = new Banker();
             dice = new Dice();
+            board = new Board(banker, dice);
         }
 
         public void MovePlayerOnBoard(Player player)
@@ -22,7 +24,8 @@ namespace MonopolyKata
             var nextPosition = (currentPosition + spacesToMove) % 40;
             
             if (currentPosition > 0 && currentPosition >= nextPosition)
-                player.ModifyPlayerBalance(200);
+                banker.DebitPlayerAccount(player, 200);
+
             player.MovePlayer(nextPosition);
             var currentSpace = board.GetSpaceAtLocation(nextPosition);
             currentSpace.LandOn(player);

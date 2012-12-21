@@ -7,11 +7,12 @@ namespace MonopolyKata
 {
     public class IncomeTax : Space
     {
-        public IncomeTax(String name, Int32 location)
-            : base(name, location)
+        public IncomeTax(String name, Int32 location, Banker banker)
+            : base(name, location, banker)
         {
             Name = name;
             Location = location;
+            Banker = banker;
         }
 
         public override void LandOn(Player player)
@@ -19,9 +20,9 @@ namespace MonopolyKata
             int tenPercentOfTotalWorth = (int)System.Math.Round(player.Balance * .1, 0);
 
             if (tenPercentOfTotalWorth > 200)
-                player.ModifyPlayerBalance(-200);
+                Banker.CreditPlayerAccount(player, 200);
             else
-                player.ModifyPlayerBalance(-tenPercentOfTotalWorth);
+                Banker.CreditPlayerAccount(player, tenPercentOfTotalWorth);
         }
     }
 }

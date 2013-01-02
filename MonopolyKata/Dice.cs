@@ -4,24 +4,24 @@ using System.Linq;
 using System.Text;
 namespace MonopolyKata
 {
-    public class Dice
+    public class Dice 
     {
         private static Random rand;
-        private Int32 currentRoll;
+        protected Int32 diOne;
+        protected Int32 diTwo;
+
+        public Boolean IsDoubles { get { return diOne == diTwo; } }
+        public Int32 CurrentRoll { get { return diOne + diTwo; } } 
 
         public Dice()
         {
             rand = new Random();
         }
 
-        public void Roll()
+        public virtual void Roll()
         {
-            currentRoll = rand.Next(1, 12);
-        }
-
-        public Int32 GetRoll()
-        {
-            return currentRoll;
+            diOne = rand.Next(1, 7);
+            diTwo = rand.Next(1, 7);
         }
     }
 }

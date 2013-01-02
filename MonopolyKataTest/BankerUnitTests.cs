@@ -56,7 +56,7 @@ namespace MonopolyKataTest
 
             property.LandOn(renter);
 
-            Assert.AreEqual(renterStartingBalance - property.Rent, renter.Balance);
+            Assert.AreEqual(renterStartingBalance - 2 * property.Rent, renter.Balance);
         }
     }
 }

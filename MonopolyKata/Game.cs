@@ -15,6 +15,7 @@ namespace MonopolyKata
         private Player nextPlayer;
         private static Random random;
         private Mover mover;
+        private Dice dice;
        
         public Game()
         {
@@ -23,8 +24,9 @@ namespace MonopolyKata
             dummyPlayerList = new List<Player>();
             turns = new List<Player>();
             currentPlayersTurn = 0;
-            random = new Random(1);
-            mover = new Mover();
+            random = new Random();
+            dice = new Dice();
+            mover = new Mover(dice);
         }
 
         public void PlayGame()
@@ -64,7 +66,7 @@ namespace MonopolyKata
             
             foreach (Player player in players)
             {
-                Player nextPievesToAdd = dummyPlayerList.ElementAt(random.Next(0, players.Count));
+                Player nextPievesToAdd = dummyPlayerList.ElementAt(random.Next(0, players.Count - 1));
                 turnOrder.Add(nextPievesToAdd);
                 dummyPlayerList.Remove(nextPievesToAdd);
             }

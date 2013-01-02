@@ -5,14 +5,14 @@ using System.Text;
 
 namespace MonopolyKata
 {
-    public class Utilitity : Space
+    public class Utility : Space
     {
         private Dice Dice { get; set; }
         public Player Owner { get; set; }
         public Int32 BuyingCost { get; protected set; }
-        public List<Utilitity> Grouping { get; protected set; }
+        public List<Utility> Grouping { get; protected set; }
 
-        public Utilitity(String name, Int32 location, Int32 cost, List<Utilitity> grouping, Banker banker, Dice dice) 
+        public Utility(String name, Int32 location, Int32 cost, List<Utility> grouping, Banker banker, Dice dice) 
             : base(name, location,  banker) 
         {
             Name = name;
@@ -34,12 +34,12 @@ namespace MonopolyKata
             }
             else if (Grouping.Where(g => g.Owner != null).Count() == 1)
             {
-                amount = 4 * Dice.GetRoll();
+                amount = 4 * Dice.CurrentRoll;
                 Banker.TransferRentPayment(player, Owner, amount);
             }
             else 
             {
-                amount = 4 * Dice.GetRoll();
+                amount = 4 * Dice.CurrentRoll;
                 Banker.TransferRentPayment(player, Owner, amount);
             }
         }

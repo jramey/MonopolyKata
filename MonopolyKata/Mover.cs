@@ -10,11 +10,11 @@ namespace MonopolyKata
         private Dice dice;
         private Banker banker;
         private int spacesToMove;
-        
-        public Mover()
+
+        public Mover(Dice dice)
         {
             banker = new Banker();
-            dice = new Dice();
+            this.dice = dice;
             board = new Board(banker, dice);
         }
 
@@ -34,7 +34,7 @@ namespace MonopolyKata
         public void PlayerRolls()
         {
             dice.Roll();
-            spacesToMove = dice.GetRoll();
+            spacesToMove = dice.CurrentRoll;
         }
 
         public Int32 GetCurrentRollForPlayer()

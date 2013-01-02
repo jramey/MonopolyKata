@@ -10,11 +10,11 @@ namespace MonopolyKataTest.Real_Estate
     {
         private Player owner;
         private Player renter;
-        private Utilitity electric;
-        private Utilitity water;
+        private Utility electric;
+        private Utility water;
         private Banker banker;
         private Dice dice;
-        private List<Utilitity> utilities;
+        private List<Utility> utilities;
 
         [TestInitialize]
         public void Setup()
@@ -23,9 +23,9 @@ namespace MonopolyKataTest.Real_Estate
             renter = new Player("Renter");
             banker = new Banker();
             dice = new Dice();
-            utilities = new List<Utilitity>();
-            electric = new Utilitity("Electric Company", 1, 150, utilities, banker, dice);
-            water = new Utilitity("Water Works", 2, 150, utilities, banker, dice);
+            utilities = new List<Utility>();
+            electric = new Utility("Electric Company", 1, 150, utilities, banker, dice);
+            water = new Utility("Water Works", 2, 150, utilities, banker, dice);
             utilities.AddRange(new[] { water, electric });
         }
 
@@ -38,7 +38,7 @@ namespace MonopolyKataTest.Real_Estate
             var renterStartingBalance = renter.Balance;
 
             dice.Roll();
-            var  currentRoll = dice.GetRoll();
+            var currentRoll = dice.CurrentRoll;
 
             water.LandOn(renter);
 
@@ -57,7 +57,7 @@ namespace MonopolyKataTest.Real_Estate
             var renterStartingBalance = renter.Balance;
 
             dice.Roll();
-            var currentRoll = dice.GetRoll();
+            var currentRoll = dice.CurrentRoll;
 
             water.LandOn(renter);
 

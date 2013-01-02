@@ -20,7 +20,7 @@ namespace MonopolyKata
         private List<Property> green;
         private List<Property> blue;
         private List<Property> railroads;
-        private List<Utilitity> utilities;
+        private List<Utility> utilities;
         private IEnumerable<Space> allSpaces;
 
         public Board(Banker banker, Dice dice)
@@ -40,7 +40,7 @@ namespace MonopolyKata
             allSpaces = new List<Space>();
 
             railroads = new List<Property>();
-            utilities = new List<Utilitity>();
+            utilities = new List<Utility>();
             BuildBoard();
         }
 
@@ -58,7 +58,7 @@ namespace MonopolyKata
             lightBlue.Add(new Property("Connecticut Ave.", 9, 100, 12, lightBlue, banker));
             spaces.Add(new Space("Just Visiting/Jail", 10, banker));
             violet.Add(new Property(" St. Charles Place", 11, 100, 12, violet, banker));
-            utilities.Add(new Utilitity("Electric Company", 12, 150, utilities, banker, dice));
+            utilities.Add(new Utility("Electric Company", 12, 150, utilities, banker, dice));
             violet.Add(new Property("States Ave", 13, 100, 12, violet, banker));
             violet.Add(new Property("Virginia Ave.", 14, 100, 12, violet, banker));
             railroads.Add(new Railroad("Pennsylvania RR", 15, 100, 12, railroads, banker));
@@ -74,7 +74,7 @@ namespace MonopolyKata
             railroads.Add(new Railroad("B. & O. RR)", 25, 100, 12, railroads, banker));
             yellow.Add(new Property("Atlantic Ave.", 26, 100, 12, yellow, banker));
             yellow.Add(new Property("Ventnor Ave.", 27, 100, 12, yellow, banker));
-            utilities.Add(new Utilitity("Water Works", 28, 150, utilities, banker, dice));
+            utilities.Add(new Utility("Water Works", 28, 150, utilities, banker, dice));
             yellow.Add(new Property("Marvin Gardens", 29, 100, 12, yellow, banker));     
             spaces.Add(new GoToJail("Go To Jail", 30, banker));
             green.Add(new Property("Pacific Ave.", 31, 100, 12, green, banker));
@@ -88,7 +88,7 @@ namespace MonopolyKata
             blue.Add(new Property("Boardwalk", 39, 100, 12, blue, banker));
 
             allSpaces = spaces.Union(properties).Union(railroads).Union(utilities).Union(purple).Union(lightBlue).Union(violet).
-                Union(orange).Union(red).Union(yellow).Union(green).Union(blue).OrderBy(b => b.Location);
+                Union(orange).Union(red).Union(yellow).Union(green).Union(blue).OrderBy((b => b.Location));
         }
 
         public Space GetSpaceAtLocation(Int32 location)

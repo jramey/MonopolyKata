@@ -10,13 +10,15 @@ namespace MonopolyKataTest
     [TestClass]
     public class MoverUnitTests
     {
-        Mover mover;
-        Player Car;
+        private Mover mover;
+        private Player Car;
+        private Dice dice;
 
         [TestInitialize]
         public void SetupMover()
         {
-            mover = new Mover();
+            dice = new Dice();
+            mover = new Mover(dice);
             Car = new Player("Car");
         }
 

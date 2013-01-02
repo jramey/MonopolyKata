@@ -10,26 +10,50 @@ namespace MonopolyKataTest
     [TestClass]
     public class DiceUnitTests
     {
-        Dice dice;
+        private FakeDice fakeDice;
+        private Dice dice;
 
         [TestInitialize]
         public void SetupDice()
         {
+            fakeDice = new FakeDice();
             dice = new Dice();
         }
 
         [TestMethod]
-        public void DiceRollsAreRandom()
+        public void AllPossibleValuesAreRolled()
         {
-            var listOfRolls = new List<Int32>();
+            var rolledValues = new List<Int32>();
 
-            for(int i = 0; i < 100; i++)
+            for (var i = 0; i < 100; i++)
             {
                 dice.Roll();
-                listOfRolls.Add(dice.GetRoll());
+                rolledValues.Add(dice.CurrentRoll);
             }
 
-            Assert.AreEqual(11, listOfRolls.Distinct().Count());
+            Assert.AreEqual(11, rolledValues.Distinct().Count());
+        }
+
+        [TestMethod]
+        public void RollingDoublesSetIsDoublesToTrue()
+        {
+            var fakeRolls = new[] { 2, 2 };
+
+            fakeDice.SetFakeRolls(fakeRolls);
+            fakeDice.Roll();
+
+            Assert.IsTrue(fakeDice.IsDoubles);
+        }
+
+        [TestMethod]
+        public void NotRollingDoubleDoesNotSetIsDoublesToTrue()
+        {
+            var fakeRolls = new[] { 2, 3 };
+
+            fakeDice.SetFakeRolls(fakeRolls);
+            fakeDice.Roll();
+
+            Assert.IsFalse(fakeDice.IsDoubles);
         }
     }
 }

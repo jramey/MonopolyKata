@@ -30,6 +30,10 @@ namespace MonopolyKata
                 Owner = player;
                 Banker.CreditPlayerAccount(player, BuyingCost);
             }
+            else if (Grouping.Where(g => g.Owner == Owner).Count() == Grouping.Count)
+            { 
+                Banker.TransferRentPayment(player, Owner, 2 * Rent);
+            }
             else
             {
                 Banker.TransferRentPayment(player, Owner, Rent);

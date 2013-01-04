@@ -11,9 +11,9 @@ namespace MonopolyKata
         private Banker banker;
         private int spacesToMove;
 
-        public Mover(Dice dice)
+        public Mover(Dice dice, Banker banker)
         {
-            banker = new Banker();
+            this.banker = banker;
             this.dice = dice;
             board = new Board(banker, dice);
         }
@@ -29,6 +29,11 @@ namespace MonopolyKata
             player.MovePlayer(nextPosition);
             var currentSpace = board.GetSpaceAtLocation(nextPosition);
             currentSpace.LandOn(player);
+        }
+
+        public void MovePlayerToJail(Player player)
+        {
+            player.Position = 10;
         }
 
         public void PlayerRolls()

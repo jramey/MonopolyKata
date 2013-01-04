@@ -11,22 +11,24 @@ namespace MonopolyKataTest
     public class GameUnitTests
     {
         private Game game;
-        private Player Car;
-        private Player Horse;
+        private Player car;
+        private Player horse;
+        private FakeDice dice;
 
         [TestInitialize]
         public void SetupGameTest()
         {
-            game = new Game();
-            Horse = new Player("horse");
-            Car = new Player("car"); 
+            dice = new FakeDice();
+            game = new Game(dice);
+            horse = new Player("horse");
+            car = new Player("car");
         }
 
         [TestMethod]
         public void CreateGameWithTwoPlayersCarAndHorse()
         {
-            var expectedFirstPlayer = Car;
-            var expectedSecondPlayer = Horse;
+            var expectedFirstPlayer = car;
+            var expectedSecondPlayer = horse;
 
             game.AddPlayer(expectedFirstPlayer);
             game.AddPlayer(expectedSecondPlayer);
@@ -41,7 +43,7 @@ namespace MonopolyKataTest
         [TestMethod, ExpectedException(typeof(InvalidOperationException))]
         public void CreateGameWithLessThanTwoPlayersFail()
         {
-            game.AddPlayer(Car);
+            game.AddPlayer(car);
             game.PlayGame();
         }
 
@@ -56,11 +58,11 @@ namespace MonopolyKataTest
             var eight = new Player("eight");
             var nine = new Player("nine");
 
-            game.AddPlayer(Car);
-            game.AddPlayer(Horse);
+            game.AddPlayer(car);
+            game.AddPlayer(horse);
             game.AddPlayer(three);
             game.AddPlayer(four);
-            game.AddPlayer(five); 
+            game.AddPlayer(five);
             game.AddPlayer(six);
             game.AddPlayer(seven);
             game.AddPlayer(eight);
@@ -70,74 +72,64 @@ namespace MonopolyKataTest
         }
 
         [TestMethod]
-        public void FirstPlayTakeTheirTurn_GetTheNextPlayersTurn()
+        public void NotRollingDoubleTurnGoesToNextPlayer()
         {
-            game.AddPlayer(Car);
-            game.AddPlayer(Horse);
-            game.PlayGame();
-            var expectedNextPlayer = game.GetTurnOrder().Skip(1).First(); 
+            game.AddPlayer(car);
+            game.AddPlayer(horse);
+            game.CreateTurnOrder();
 
-            Assert.AreEqual(expectedNextPlayer, game.GetNextTurn());
+            var player = game.GetTurnOrder().ElementAt(1);
+
+            var fakeRolls = new[] { 2, 3 };
+            dice.SetFakeRolls(fakeRolls);
+            dice.Roll();
+
+            game.AssignNextPlayer();
+
+            Assert.AreEqual(player, game.GetNextTurn());
         }
 
         [TestMethod]
-        public void BothPlayersTakeTheirTurns()
+        public void RollingDoublesStaysPLayersTurn()
         {
-            var expectedFirstTurn = Car;
-            var expectedSecondTurn = Horse;
-            game.AddPlayer(Car);
-            game.AddPlayer(Horse);
-            game.PlayGame();
-            TakeManyTurns(2);
+            game.AddPlayer(car);
+            game.AddPlayer(horse);
+            game.CreateTurnOrder();
 
-            Assert.AreEqual(expectedFirstTurn, game.GetTurnsTaken().First());
-            Assert.AreEqual(expectedSecondTurn, game.GetTurnsTaken().Skip(1).First());
+            var player = game.GetNextTurn();
+
+            var fakeRolls = new[] { 2, 2 };
+            dice.SetFakeRolls(fakeRolls);
+            dice.Roll();
+
+            game.AssignNextPlayer();
+
+            Assert.AreEqual(player, game.GetNextTurn());
         }
 
         [TestMethod]
-        public void TakeTwentyTurns_OrderStaysTheSame()
+        public void PlayerRollsDoublesThreeTimesMovesToJustVisiting()
         {
-            game.AddPlayer(Car);
-            game.AddPlayer(Horse);
-            game.PlayGame();
-            var firstPlayer = game.GetTurnOrder().First();
-            var secondPlayer = game.GetTurnOrder().Skip(1).First();
-            var counter = 0;
+            game.AddPlayer(car);
+            game.AddPlayer(horse);
+            game.CreateTurnOrder();
 
-            for (int i = 0; i < 20; i++)
+            var player = game.GetNextTurn();
+
+            var fakeRolls = new[] { 2, 2, 3, 3, 4, 4 };
+            dice.SetFakeRolls(fakeRolls);
+            RollMany(3);
+
+            Assert.AreEqual(10, player.Position);
+        }
+
+        public void RollMany(Int32 rolls)
+        {
+            for (int i = 0; i < rolls; i++)
             {
-                TakeManyTurns(40);
-
-                if (counter % 2 == 0)
-                    Assert.AreEqual(firstPlayer, game.GetTurnsTaken().ElementAt(counter));
-                else
-                    Assert.AreEqual(secondPlayer, game.GetTurnsTaken().ElementAt(counter));
+                dice.Roll();
+                game.AssignNextPlayer();
             }
-            counter++;
-        }
-
-        [TestMethod]
-        public void TakeTwentyTurns_TwentyTurnsEach()
-        {
-            game.AddPlayer(Car);
-            game.AddPlayer(Horse);
-            game.PlayGame();
-            var carCounter = 0;
-            var horseCounter = 0;
-
-            for (int i = 0; i < 40; i++)
-            {
-                TakeManyTurns(40);
-            }
-
-            for (int i = 0; i < 40; i++)
-                if (game.GetTurnsTaken().ElementAt(i) == Car)
-                    carCounter++;
-                else
-                    horseCounter++;
-
-            Assert.AreEqual(20, carCounter);
-            Assert.AreEqual(20, horseCounter);
         }
 
         public void TakeManyTurns(Int32 turns)
@@ -145,5 +137,5 @@ namespace MonopolyKataTest
             for (int i = 0; i < turns; i++)
                 game.TakeTurn();
         }
-   }
+    }
 }

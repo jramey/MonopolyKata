@@ -16,8 +16,10 @@ namespace MonopolyKata
         private static Random random;
         private Mover mover;
         private Dice dice;
+        private Banker banker;
+        private Int32 rollDoublesCounter = 0;
        
-        public Game()
+        public Game(Dice dice)
         {
             players = new List<Player>();
             turnOrder = new List<Player>();
@@ -25,8 +27,10 @@ namespace MonopolyKata
             turns = new List<Player>();
             currentPlayersTurn = 0;
             random = new Random();
-            dice = new Dice();
-            mover = new Mover(dice);
+            banker = new Banker();
+            this.dice = dice;
+            
+            mover = new Mover(dice, banker);
         }
 
         public void PlayGame()
@@ -42,6 +46,23 @@ namespace MonopolyKata
             mover.PlayerRolls();
             mover.MovePlayerOnBoard(nextPlayer);
             turns.Add(nextPlayer);
+
+            AssignNextPlayer();
+        }
+
+        public void AssignNextPlayer()
+        {
+            if (dice.IsDoubles == false)
+            {
+                IncrementTurnCounter();
+                rollDoublesCounter = 0;
+            }
+            else
+            {
+                rollDoublesCounter++;
+                if (rollDoublesCounter == 3)
+                    mover.MovePlayerToJail(nextPlayer);
+            }
         }
 
         public void AddPlayer(Player piece)
@@ -60,7 +81,7 @@ namespace MonopolyKata
                 throw new InvalidOperationException();
         }
 
-        private void CreateTurnOrder()
+        public void CreateTurnOrder()
         {
             CreateDummyPlayerList();
             
@@ -84,9 +105,8 @@ namespace MonopolyKata
 
         public Player GetNextTurn()
         {
-            nextPlayer = turnOrder.ElementAt(currentPlayersTurn);
-            IncrementTurnCounter();
-            return nextPlayer;
+                nextPlayer = turnOrder.ElementAt(currentPlayersTurn);
+                return nextPlayer;
         }
 
         private void IncrementTurnCounter()
@@ -94,7 +114,7 @@ namespace MonopolyKata
             if(currentPlayersTurn == players.Count - 1)
                 currentPlayersTurn = 0;
             else
-            currentPlayersTurn++;
+                 currentPlayersTurn++;
         }
 
         public List<Player> GetTurnsTaken()

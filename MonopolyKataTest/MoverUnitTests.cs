@@ -13,12 +13,14 @@ namespace MonopolyKataTest
         private Mover mover;
         private Player Car;
         private Dice dice;
+        private Banker banker;
 
         [TestInitialize]
         public void SetupMover()
         {
             dice = new Dice();
-            mover = new Mover(dice);
+            banker = new Banker();
+            mover = new Mover(dice, banker);
             Car = new Player("Car");
         }
 

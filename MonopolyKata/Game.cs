@@ -10,59 +10,49 @@ namespace MonopolyKata
         private List<Player> players;
         private List<Player> turnOrder;
         private List<Player> dummyPlayerList;
-        private List<Player> turns;
-        private Int32 currentPlayersTurn;
-        private Player nextPlayer;
         private static Random random;
         private Mover mover;
         private Dice dice;
         private Banker banker;
-        private Int32 rollDoublesCounter = 0;
+        private Board board;
+        private Proprietor proprietor;
+        private Gameplay gameplay;
+
        
         public Game(Dice dice)
         {
             players = new List<Player>();
             turnOrder = new List<Player>();
             dummyPlayerList = new List<Player>();
-            turns = new List<Player>();
-            currentPlayersTurn = 0;
             random = new Random();
             banker = new Banker();
             this.dice = dice;
-            
-            mover = new Mover(dice, banker);
+            board = new Board(banker, dice);
+            mover = new Mover(dice, banker, board);
+            proprietor = new Proprietor(banker);
+            gameplay = new Gameplay(dice, mover, turnOrder);
         }
 
         public void PlayGame()
         {
             CheckValidNumberOfPlayers();
             CreateTurnOrder();
-            TakeTurn();
+
+            while (CheckGameover() == false)
+                CheckPlayersBalance();
+                gameplay.TakeTurn();
         }
 
-        public void TakeTurn()
+        public void CheckPlayersBalance()
         {
-            GetNextTurn();
-            mover.PlayerRolls();
-            mover.MovePlayerOnBoard(nextPlayer);
-            turns.Add(nextPlayer);
-
-            AssignNextPlayer();
+            foreach (var player in players)
+                if (player.Balance < 0)
+                    turnOrder.Remove(player);
         }
 
-        public void AssignNextPlayer()
+        public Boolean CheckGameover()
         {
-            if (dice.IsDoubles == false)
-            {
-                IncrementTurnCounter();
-                rollDoublesCounter = 0;
-            }
-            else
-            {
-                rollDoublesCounter++;
-                if (rollDoublesCounter == 3)
-                    mover.MovePlayerToJail(nextPlayer);
-            }
+            return (turnOrder.Count(p => p.Balance > 0) == 1);
         }
 
         public void AddPlayer(Player piece)
@@ -87,7 +77,7 @@ namespace MonopolyKata
             
             foreach (Player player in players)
             {
-                Player nextPievesToAdd = dummyPlayerList.ElementAt(random.Next(0, players.Count - 1));
+                Player nextPievesToAdd = dummyPlayerList.ElementAt(random.Next(0, dummyPlayerList.Count - 1));
                 turnOrder.Add(nextPievesToAdd);
                 dummyPlayerList.Remove(nextPievesToAdd);
             }
@@ -95,31 +85,12 @@ namespace MonopolyKata
 
         private void CreateDummyPlayerList()
         {
-            dummyPlayerList =  players.ToList();
+            dummyPlayerList = players.ToList();
         }
 
         public IEnumerable<Player> GetTurnOrder()
         {
             return turnOrder;
-        }
-
-        public Player GetNextTurn()
-        {
-                nextPlayer = turnOrder.ElementAt(currentPlayersTurn);
-                return nextPlayer;
-        }
-
-        private void IncrementTurnCounter()
-        {
-            if(currentPlayersTurn == players.Count - 1)
-                currentPlayersTurn = 0;
-            else
-                 currentPlayersTurn++;
-        }
-
-        public List<Player> GetTurnsTaken()
-        {
-            return turns;
         }
     }
 }

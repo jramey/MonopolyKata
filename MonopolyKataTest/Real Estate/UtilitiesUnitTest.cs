@@ -61,8 +61,8 @@ namespace MonopolyKataTest.Real_Estate
 
             water.LandOn(renter);
 
-            Assert.AreEqual(renterStartingBalance - 4 * currentRoll, renter.Balance);
-            Assert.AreEqual(ownerStartingBalance + 4 * currentRoll, owner.Balance);
+            Assert.AreEqual(renterStartingBalance - 10 * currentRoll, renter.Balance);
+            Assert.AreEqual(ownerStartingBalance + 10 * currentRoll, owner.Balance);
 
         }
     }

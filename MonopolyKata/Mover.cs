@@ -11,11 +11,11 @@ namespace MonopolyKata
         private Banker banker;
         private int spacesToMove;
 
-        public Mover(Dice dice, Banker banker)
+        public Mover(Dice dice, Banker banker, Board board)
         {
             this.banker = banker;
             this.dice = dice;
-            board = new Board(banker, dice);
+            this.board = board;
         }
 
         public void MovePlayerOnBoard(Player player)
@@ -45,11 +45,6 @@ namespace MonopolyKata
         public Int32 GetCurrentRollForPlayer()
         {
             return spacesToMove;
-        }
-
-        public void SetSpacesToMove(Int32 spaces)
-        {
-            spacesToMove = spaces;
         }
     }
 }

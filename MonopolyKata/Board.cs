@@ -21,6 +21,7 @@ namespace MonopolyKata
         private List<Property> blue;
         private List<Property> railroads;
         private List<Utility> utilities;
+        private List<Property> realestate;
         private IEnumerable<Space> allSpaces;
 
         public Board(Banker banker, Dice dice)
@@ -38,6 +39,7 @@ namespace MonopolyKata
             green = new List<Property>();
             blue = new List<Property>();
             allSpaces = new List<Space>();
+            realestate = new List<Property>();
 
             railroads = new List<Property>();
             utilities = new List<Utility>();

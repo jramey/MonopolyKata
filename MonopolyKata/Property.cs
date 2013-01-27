@@ -11,6 +11,7 @@ namespace MonopolyKata
         public Int32 BuyingCost { get;  protected set;}
         public Int32 Rent { get;  protected set; }
         public List<Property> Grouping { get; protected set; }
+        public Boolean IsMortgaged { get; set; }
 
         public Property(String name, Int32 location, Int32 cost, Int32 rent, List<Property> grouping, Banker banker) 
             : base(name, location,  banker) 
@@ -30,7 +31,7 @@ namespace MonopolyKata
                 Owner = player;
                 Banker.CreditPlayerAccount(player, BuyingCost);
             }
-            else if (Grouping.Where(g => g.Owner == Owner).Count() == Grouping.Count)
+            else if (Grouping.Count(g => g.Owner == Owner) == Grouping.Count)
             { 
                 Banker.TransferRentPayment(player, Owner, 2 * Rent);
             }

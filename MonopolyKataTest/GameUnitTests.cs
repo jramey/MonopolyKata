@@ -13,6 +13,7 @@ namespace MonopolyKataTest
         private Game game;
         private Player car;
         private Player horse;
+        private Player player3;
         private FakeDice dice;
 
         [TestInitialize]
@@ -22,6 +23,7 @@ namespace MonopolyKataTest
             game = new Game(dice);
             horse = new Player("horse");
             car = new Player("car");
+            player3 = new Player("Player 3");
         }
 
         [TestMethod]
@@ -72,70 +74,30 @@ namespace MonopolyKataTest
         }
 
         [TestMethod]
-        public void NotRollingDoubleTurnGoesToNextPlayer()
+        public void GameOverIsSetWhenOnlyOnePlayerHasMoneyLeft()
         {
             game.AddPlayer(car);
             game.AddPlayer(horse);
             game.CreateTurnOrder();
+            horse.ModifyPlayerBalance(-1501);
 
-            var player = game.GetTurnOrder().ElementAt(1);
-
-            var fakeRolls = new[] { 2, 3 };
-            dice.SetFakeRolls(fakeRolls);
-            dice.Roll();
-
-            game.AssignNextPlayer();
-
-            Assert.AreEqual(player, game.GetNextTurn());
+            Assert.IsTrue(game.CheckGameover());
         }
 
         [TestMethod]
-        public void RollingDoublesStaysPLayersTurn()
+        public void PlayerIsRemovedFromOrderWhenBalanceIsLessThanZero()
         {
             game.AddPlayer(car);
             game.AddPlayer(horse);
+            game.AddPlayer(player3);
+
+            var playerCount = 3;
+
             game.CreateTurnOrder();
+            horse.ModifyPlayerBalance(-1501);
+            game.CheckPlayersBalance();
 
-            var player = game.GetNextTurn();
-
-            var fakeRolls = new[] { 2, 2 };
-            dice.SetFakeRolls(fakeRolls);
-            dice.Roll();
-
-            game.AssignNextPlayer();
-
-            Assert.AreEqual(player, game.GetNextTurn());
-        }
-
-        [TestMethod]
-        public void PlayerRollsDoublesThreeTimesMovesToJustVisiting()
-        {
-            game.AddPlayer(car);
-            game.AddPlayer(horse);
-            game.CreateTurnOrder();
-
-            var player = game.GetNextTurn();
-
-            var fakeRolls = new[] { 2, 2, 3, 3, 4, 4 };
-            dice.SetFakeRolls(fakeRolls);
-            RollMany(3);
-
-            Assert.AreEqual(10, player.Position);
-        }
-
-        public void RollMany(Int32 rolls)
-        {
-            for (int i = 0; i < rolls; i++)
-            {
-                dice.Roll();
-                game.AssignNextPlayer();
-            }
-        }
-
-        public void TakeManyTurns(Int32 turns)
-        {
-            for (int i = 0; i < turns; i++)
-                game.TakeTurn();
+            Assert.AreEqual(playerCount- 1, game.GetTurnOrder().Count());
         }
     }
 }

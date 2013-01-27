@@ -9,7 +9,7 @@ namespace MonopolyKata
     {
         public String Name { get; private set; }
         public Int32 Position { get; set; }
-        public Int32 Balance { get;  set; }
+        public Int32 Balance { get; set; }
 
         public Player(String Name)
         {

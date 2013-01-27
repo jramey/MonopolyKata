@@ -25,23 +25,24 @@ namespace MonopolyKata
 
         public override void LandOn(Player player)
         {
-            var amount = 0;
-
             if (Owner == null)
             {
                 Owner = player;
                 Banker.CreditPlayerAccount(player, BuyingCost);
             }
-            else if (Grouping.Where(g => g.Owner != null).Count() == 1)
+            else if (OneUtilityIsOwned())
             {
-                amount = 4 * Dice.CurrentRoll;
-                Banker.TransferRentPayment(player, Owner, amount);
+                Banker.TransferRentPayment(player, Owner, 4 * Dice.CurrentRoll);
             }
             else 
             {
-                amount = 4 * Dice.CurrentRoll;
-                Banker.TransferRentPayment(player, Owner, amount);
+                Banker.TransferRentPayment(player, Owner, 10 * Dice.CurrentRoll);
             }
+        }
+
+        private bool OneUtilityIsOwned()
+        {
+            return Grouping.Count(g => g.Owner != null) == 1;
         }
     }
 }

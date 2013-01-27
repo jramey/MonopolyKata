@@ -45,6 +45,7 @@
     <Compile Include="Dice.cs" />
     <Compile Include="FakeDice.cs" />
     <Compile Include="Game.cs" />
+    <Compile Include="Gameplay.cs" />
     <Compile Include="Go.cs" />
     <Compile Include="GoToJail.cs" />
     <Compile Include="IncomeTax.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property.cs" />
+    <Compile Include="Proprietor.cs" />
     <Compile Include="Railroad.cs" />
     <Compile Include="Space.cs" />
     <Compile Include="Utility.cs" />

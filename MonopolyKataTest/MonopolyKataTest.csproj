@@ -59,6 +59,8 @@
     <Compile Include="Spaces\GoToJailUnitTest.cs" />
     <Compile Include="Spaces\IncomeTaxUnitTest.cs" />
     <Compile Include="Spaces\LuxuryTaxUnitTest.cs" />
+    <Compile Include="ProprietorUnitTest.cs" />
+    <Compile Include="GameplayUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MonopolyKata\MonopolyKata.csproj">

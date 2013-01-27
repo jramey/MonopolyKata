@@ -27,7 +27,8 @@ namespace MonopolyKata
             }
             else if (player != Owner)
             {
-                var amount = Rent * (Int32)Math.Pow(2, Grouping.Count(g => g.Owner == Owner) - 1);
+                var railroadsOwned = Grouping.Count(g => g.Owner == Owner);
+                var amount = Rent * (Int32)Math.Pow(2, railroadsOwned - 1);
                 Banker.TransferRentPayment(player, Owner, amount);
             }
         }

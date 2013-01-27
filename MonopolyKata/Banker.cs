@@ -7,15 +7,7 @@ namespace MonopolyKata
 {
     public class Banker
     {
-        private List<Property> properties;
-        private List<Space> spaces;
         public Int32 rentAmount;
-
-        public Banker()
-        {
-            spaces = new List<Space>();
-            properties = new List<Property>();
-        }
 
         public void DebitPlayerAccount(Player player, Int32 amount)
         {
